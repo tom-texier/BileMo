@@ -10,20 +10,25 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class AppFixtures extends Fixture
 {
     private UserPasswordHasherInterface $hasher;
     private SluggerInterface $slugger;
+    private TagAwareCacheInterface $cache;
 
-    public function __construct(UserPasswordHasherInterface $hasher, SluggerInterface $slugger)
+    public function __construct(UserPasswordHasherInterface $hasher, SluggerInterface $slugger, TagAwareCacheInterface $cache)
     {
         $this->hasher = $hasher;
         $this->slugger = $slugger;
+        $this->cache = $cache;
     }
 
     public function load(ObjectManager $manager): void
     {
+        $this->cache->invalidateTags(['productsCache']);
+
         $faker = Factory::create('fr_FR');
 
         for ($i=1; $i <= 50; $i++) {

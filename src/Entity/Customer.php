@@ -6,8 +6,11 @@ use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Hateoas\Configuration\Annotation as Hateoas;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
@@ -18,11 +21,19 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"customer:read", "user:read"})
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Groups({"customer:read", "user:read"})
+     * @Assert\Email(message="Cette adresse mail n'est pas valide")
+     * @Assert\NotBlank(message="L'adresse mail est requise")
+     * @Assert\Length(
+     *     max=255,
+     *     maxMessage="L'adresse mail doit avoir une taille maximale de {{ limit }} caractères"
+     * )
      */
     private $email;
 
@@ -39,11 +50,18 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"customer:read", "user:read"})
+     * @Assert\NotBlank(message="Le nom est requis")
+     * @Assert\Length(
+     *     max=255,
+     *     maxMessage="Le nom doit avoir une taille maximale de {{ limit }} caractères"
+     * )
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="customer", orphanRemoval=true)
+     * @Groups({"customer:read"})
      */
     private $users;
 

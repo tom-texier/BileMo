@@ -66,6 +66,7 @@ class AppFixtures extends Fixture
                 ->setLastname($lastname)
                 ->setUsername($username)
                 ->setEmail($email)
+                ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeThisYear()))
                 ->setCustomer($faker->randomElement($customersList))
             ;
 

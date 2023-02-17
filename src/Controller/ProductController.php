@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Cache\ItemInterface;
 use JMS\Serializer\SerializerInterface;
@@ -36,9 +35,9 @@ class ProductController extends AbstractController
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 10);
 
-        $idCache = "getProductsList-$page-$limit";
+        $id_cache = "getProductsList[$page][$limit]";
 
-        $jsonProductsList = $this->cache->get($idCache, function (ItemInterface $item) use ($productRepository, $serializer, $page, $limit) {
+        $jsonProductsList = $this->cache->get($id_cache, function (ItemInterface $item) use ($productRepository, $serializer, $page, $limit) {
             $item->tag("productsCache");
             return $serializer->serialize($productRepository->findAllByPage($page, $limit), 'json');
         });

@@ -39,6 +39,13 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
+    public function findBy_ByPage(array $criteria, $page, $limit, $orderBy = null)
+    {
+        $offset = ($page - 1) * $limit;
+
+        return $this->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

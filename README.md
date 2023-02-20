@@ -37,16 +37,38 @@ composer install
 DATABASE_URL=mysql://username:password@127.0.0.1:3306/bileMo
 ```
 
+7. Ajouter la ligne suivante dans ce même fichier en complétant par une chaîne de caractères aléatoires (chiffres et lettres) :
+```dotenv
+JWT_PASSPHRASE=
+```
+
 7. Générer une paire de clé SSL en lançant la commande suivante :
 ```shell
 php bin/console lexik:jwt:generate-keypair
 ```
 *Vérifier que le dossier `/config/jwt/` a bien été créé et qu'il contient les 2 clés SSL (publique et privée)*
-**<u>Attention :</u>  cette commande a également ajouté à la fin du fichier `.env` les informations de vos clés. Pour éviter toute fuite de données, couper/coller ces lignes à la fin du fichier `.env.local` créé précédemment.**
+
+Votre fichier `.env.local` doit maintenant ressembler à cela :
+```dotenv
+###> doctrine/doctrine-bundle ###
+DATABASE_URL=mysql://username:password@127.0.0.1:3306/bileMo
+###< doctrine/doctrine-bundle ###
+
+###> lexik/jwt-authentication-bundle ###
+JWT_PASSPHRASE=XXXXXXXXXXXXXXXXXXXXXXXXXXX
+###< lexik/jwt-authentication-bundle ###
+```
 
 8. Monter la base de données et générer les données initiales
 ```shell
 composer prepare
+```
+ou
+```shell
+php bin/console doctrine:database:drop --if-exists -f
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:update -f
+php bin/console doctrine:fixtures:load -n
 ```
 
 8. Importer la configuration des routes dans Postman. Le fichier se trouve dans `/resources/BileMo.postman_collection.json`.

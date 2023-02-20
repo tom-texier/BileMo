@@ -8,6 +8,10 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +40,40 @@ class UserController extends AbstractController
     }
 
     /**
+     * Récupère tous les utilisateurs
+     *
+     * @OA\Response(
+     *     response="200",
+     *     description="Retourne la liste des utilisateurs",
+     *     @OA\JsonContent(
+     *      type="array",
+     *      @OA\Items(ref=@Model(type=User::class))
+     *     )
+     * )
+     * @OA\Response(
+     *     response="401",
+     *     description="JWT token invalide",
+     *     @OA\JsonContent(ref="#/components/schemas/ExpiredToken")
+     * )
+     * @OA\Parameter(
+     *     name="page",
+     *     in="query",
+     *     description="La page que l'on veut récupérer",
+     *     @OA\Schema(type="int")
+     * )
+     * @OA\Parameter(
+     *     name="limit",
+     *     in="query",
+     *     description="Le nombre d'éléments que l'on veut récupérer",
+     *     @OA\Schema(type="int")
+     * )
+     * @OA\Tag(name="Users")
+     *
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
+     * @throws InvalidArgumentException
      * @Route(name="api_users_getUsersList", methods={"GET"})
      */
     public function getUsersList(Request $request, UserRepository $userRepository, SerializerInterface $serializer): JsonResponse
@@ -62,6 +100,26 @@ class UserController extends AbstractController
     }
 
     /**
+     * Récupère les détails d'un utilisateur
+     *
+     * @OA\Response(
+     *     response="200",
+     *     description="Retourne la liste des utilisateurs",
+     *     @OA\JsonContent(
+     *      type="array",
+     *      @OA\Items(ref=@Model(type=User::class))
+     *     )
+     * )
+     * @OA\Response(
+     *     response="401",
+     *     description="JWT token invalide",
+     *     @OA\JsonContent(ref="#/components/schemas/ExpiredToken")
+     * )
+     * @OA\Tag(name="Users")
+     *
+     * @param User $user
+     * @param SerializerInterface $serializer
+     * @return JsonResponse
      * @Route("/{id}", name="api_users_getUserDetails", methods={"GET"})
      */
     public function getUserDetails(User $user, SerializerInterface $serializer): JsonResponse
@@ -77,6 +135,32 @@ class UserController extends AbstractController
     }
 
     /**
+     * Créer un nouvel utilisateur
+     *
+     * @OA\Response(
+     *     response="201",
+     *     description="L'utilisateur a été créé",
+     *     @OA\JsonContent(
+     *      type="array",
+     *      @OA\Items(ref=@Model(type=User::class))
+     *     )
+     * )
+     * @OA\Response(
+     *     response="401",
+     *     description="JWT token invalide",
+     *     @OA\JsonContent(ref="#/components/schemas/ExpiredToken")
+     * )
+     * @OA\RequestBody(
+     *     description="Les informations de l'utilisateur a créer",
+     *     required=true,
+     *     @OA\JsonContent(ref="#/components/schemas/CreateUserRequestBody")
+     * )
+     * @OA\Tag(name="Users")
+     *
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param ValidatorInterface $validator
+     * @return JsonResponse
      * @Route(name="api_users_createUser", methods={"POST"})
      */
     public function createUser(Request $request, SerializerInterface $serializer, ValidatorInterface $validator): JsonResponse
@@ -106,6 +190,19 @@ class UserController extends AbstractController
     }
 
     /**
+     * Supprime un utilisateur
+     *
+     * @OA\Response(
+     *     response="204",
+     *     description="No Content"
+     * )
+     * @OA\Response(
+     *     response="401",
+     *     description="JWT token invalide",
+     *     @OA\JsonContent(ref="#/components/schemas/ExpiredToken")
+     * )
+     * @OA\Tag(name="Users")
+     *
      * @Route("/{id}", name="api_users_deleteUser", methods={"DELETE"})
      */
     public function deleteUser(User $user): JsonResponse

@@ -101,3 +101,6 @@ Cette route vous retourne un token que vous devez ajouter dans l'entête de chaq
 
 ![Authorization Bearer Token](./resources/images/postman_token.png)
 
+---
+
+### Une fois votre serveur local lancé, la documentation de l'API est disponible via la route `/api/doc`.

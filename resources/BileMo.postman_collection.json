@@ -157,7 +157,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"firstname\": \"Tom\",\n    \"lastname\": \"Texier\",\n    \"username\": \"tom.texier\",\n    \"email\": \"tom.texier49@gmail.com\"\n}",
+					"raw": "{\n    \"firstname\": \"John\",\n    \"lastname\": \"Smith\",\n    \"username\": \"john.smith\",\n    \"email\": \"john.smith@gmail.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

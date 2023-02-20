@@ -206,5 +206,12 @@
 				]
 			}
 		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "https://localhost:8000/api",
+			"type": "string"
+		}
 	]
 }

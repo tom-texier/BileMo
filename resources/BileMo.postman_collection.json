@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "4ef29036-fb45-4e6a-bf2b-79b0c529727f",
+		"_postman_id": "a88face8-b016-4ab6-a84a-def943b49bb4",
 		"name": "BileMo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "12296056"
+		"_exporter_id": "14397239"
 	},
 	"item": [
 		{
@@ -157,7 +157,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"firstname\": \"John\",\n    \"lastname\": \"Smith\",\n    \"username\": \"john.smith\",\n    \"email\": \"john.smith@gmail.com\"\n}",
+					"raw": "{\n    \"firstname\": \"Jonh\",\n    \"lastname\": \"Doe\",\n    \"username\": \"john.doe\",\n    \"email\": \"john.doe@gmail.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -182,7 +182,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "",
+				"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NzY4OTI1MjQsImV4cCI6MTY3Njg5NjEyNCwicm9sZXMiOlsiUk9MRV9DVVNUT01FUiJdLCJ1c2VybmFtZSI6ImN1c3RvbWVyMUBnbWFpbC5jb20ifQ.a9KfMtJ5fu_aHZCcxwIVPYmqE7giuVEku6cJOB6b4HlOTd6N53KMFGqMTeimO9Ti8BGDN2PfNRm-guPVzRw6OdenM5B2M0Q_zMT48yk3JYVC517XsJhciPUQgWLspJDKvmQ2cryvdErZi19xGbO9N1FjjkHQ-P60LKjJIfnxgltfzt9e82QUdD1-KKNIhbWtnjAEYSC7ggQlQtb01mKS7xGnb30BFYAi14nLt6z53QtHS1yq-XofxDbCSaRjdzOxslM16iOjatysfzCyHIityqJztgZT1skQjIEw8Cq0km_pmWP9KARnasxnkW7uoEj3Cjh3xSXefx6DWL0pzhABUw",
 				"type": "string"
 			}
 		]
